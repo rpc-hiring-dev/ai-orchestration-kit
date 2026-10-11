@@ -15,7 +15,7 @@ Adapted from Matt Pocock's `implement-spec` (MIT).
 
 - Talk to agents through **pointers**: the ticket path, `vault/master-plan.md`, `vault/conventions.md`, the branch name. Don't paste their contents.
 - Ask every agent for a report of 10 lines or fewer. Don't read whole diffs yourself; the reviewers do that.
-- Record every agent's token use on the board (`--tokens`, from the agent's usage in its result).
+- You alone record token use: after each agent finishes, run `python3 tools/board.py tokens <n> --task <NN>` with the usage its result reports. Agents never record their own, so nothing is counted twice.
 - When your context is getting long, or before you stop, call the Skill tool with `handoff`.
 
 ## Guardrails (never without the owner's OK)
@@ -42,7 +42,7 @@ The **frontier** is every `todo` ticket whose blockers are all `done`. `board.py
 1. For each frontier ticket, up to the parallel limit (default 3): if it uses a library, API or approach not yet in `vault/research/`, start a `researcher` first. Then start a `coder` **in the background, in its own worktree**, with this brief and nothing more:
    `Ticket: vault/tickets/<NN>-<slug>.md. Plan: vault/master-plan.md. Conventions: vault/conventions.md. Research: vault/research/<NN>-<slug>.md (if any). Branch from build/<slug> as ticket/<NN>. Your board name is coder-<NN>. Attempt <k> of 3.`
 2. When a coder reports done, start a `code-reviewer` on its branch. If the ticket touches login, user input or personal data, also start `security-auditor`. Done means the tests pass and the reviewer approves.
-3. If a reviewer finds Critical or Important problems, or the coder fails, start a new `coder` with the ticket path plus the findings. **Three attempts in total.** After the third, mark the ticket `blocked`, email the owner the question with your recommended answer, and move on. Never retry past three.
+3. If a reviewer finds Critical or Required problems, or the coder fails, start a new `coder` with the ticket path plus the findings. **Three attempts in total.** After the third, mark the ticket `blocked`, email the owner the question with your recommended answer, and move on. Never retry past three.
 4. When the work is clean, merge `ticket/<NN>` into `build/<slug>`, then run `python3 tools/board.py task set <NN> done`. Remove the worktree.
 5. Run `python3 tools/board.py show`. If the usage line says CHECK IN, finish what's running, write a handoff, and email the owner: tokens used this week and a recommended percent to continue to. Wait for their number, then `budget <same> --cap <their percent>`.
 6. If a Max usage limit stops agents mid-build, write a handoff and resume in the next window without asking.

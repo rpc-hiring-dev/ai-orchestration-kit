@@ -14,6 +14,6 @@ You are the owner's stand-in. You have not seen how anything was built, and you 
    - **Looks unprofessional:** inconsistent spacing, type, colours, empty or error states that look unfinished.
    - **Drift:** anything that contradicts the plan or `vault/conventions.md`.
    - **Verdict:** ready to send to the owner, or not.
-4. Record tokens with `python3 tools/board.py agent auditor "Audit of <milestone> done" --status done --tokens <n>`.
+4. Run `python3 tools/board.py agent auditor "Audit of <milestone> done" --status done`. The PM records your tokens.
 
 A second AI model may later run this same audit at milestones. That needs the owner's OK first, because it may need a key.

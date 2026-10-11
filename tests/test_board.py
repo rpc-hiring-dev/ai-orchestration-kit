@@ -56,12 +56,25 @@ class BoardTest(unittest.TestCase):
         self.assertIn("![[screenshots/a.png|360]]", md)
 
     def test_screenshot_outside_vault_is_refused(self):
-        r = self.board("shot", "elsewhere.png", "x", ok=False)
+        open(os.path.join(self.root, "elsewhere.png"), "wb").close()
+        r = self.board("shot", os.path.join(self.root, "elsewhere.png"), "x", ok=False)
         self.assertNotEqual(r.returncode, 0)
 
     def test_milestone_phases(self):
         self.board("phase", "Design draft")
         self.assertEqual(self.data()["phase"], "Design draft")
+
+    def test_old_board_with_old_phases_accepts_new_ones(self):
+        path = os.path.join(self.root, "status", "board.json")
+        b = self.data(); b["phases"] = ["Discovery", "Build", "Review", "Ship"]
+        json.dump(b, open(path, "w"))
+        self.board("phase", "Features draft")
+        self.assertEqual(self.data()["phase"], "Features draft")
+
+    def test_pipes_in_titles_keep_obsidian_table_intact(self):
+        self.board("task", "add", "01", "A | B")
+        md = open(os.path.join(self.root, "vault", "Dashboard.md")).read()
+        self.assertIn("A \\| B", md)
 
     def test_old_board_without_new_fields_still_loads(self):
         path = os.path.join(self.root, "status", "board.json")

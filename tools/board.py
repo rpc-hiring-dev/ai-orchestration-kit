@@ -80,6 +80,7 @@ def locked_board():
         if fcntl:
             fcntl.flock(lock, fcntl.LOCK_EX)
         board = {**empty(), **json.load(open(DATA))} if os.path.exists(DATA) else empty()
+        board["phases"] = PHASES  # boards from older kits keep working with the current phases
         yield board
         board["updated"] = now()
         board["log"] = board["log"][-50:]
@@ -107,6 +108,9 @@ def render(board):
     est = sum(t.get("est") or 0 for t in board["tasks"].values())
     shots = board.get("shots", [])
 
+    def cell(x):  # keep Obsidian tables intact
+        return str(x or "").replace("|", "\\|").replace("\n", " ")
+
     # Obsidian dashboard
     lines = [f"# {board['project']}", "",
              f"**Phase:** {board['phase']} ({phase_i + 1} of {len(board['phases'])})  ",
@@ -116,15 +120,15 @@ def render(board):
              f"**Updated:** {board['updated']}", "", "## Agents", ""]
     if board["agents"]:
         lines += ["| Agent | Status | Doing | Since |", "|---|---|---|---|"]
-        lines += [f"| {n} | {a['status']} | {a['doing']} | {a['updated']} |" for n, a in sorted(board["agents"].items())]
+        lines += [f"| {cell(n)} | {a['status']} | {cell(a['doing'])} | {a['updated']} |" for n, a in sorted(board["agents"].items())]
     else:
         lines.append("_No agents have reported yet._")
     lines += ["", "## Tasks", ""]
     if board["tasks"]:
         lines += ["| # | Task | Status | Agent | Blocked by | Tokens est / actual | Note |", "|---|---|---|---|---|---|---|"]
         for tid, t in sorted(board["tasks"].items()):
-            lines.append(f"| {tid} | {t['title']} | {t['status']} | {t.get('agent') or ''} | "
-                         f"{', '.join(t['blocked_by'])} | {t.get('est') or '-'} / {t.get('actual', 0)} | {t.get('note') or ''} |")
+            lines.append(f"| {cell(tid)} | {cell(t['title'])} | {t['status']} | {cell(t.get('agent'))} | "
+                         f"{', '.join(t['blocked_by'])} | {t.get('est') or '-'} / {t.get('actual', 0)} | {cell(t.get('note'))} |")
     else:
         lines.append("_No tasks yet._")
     lines += ["", "## Build timeline", ""]
@@ -259,12 +263,17 @@ def main(argv):
         with locked_board() as b:
             add_tokens(b, a.n, a.task); b["log"].append(f"{now()} {a.n:,} tokens" + (f" on task {a.task}" if a.task else ""))
     elif a.cmd == "budget":
+        if a.weekly <= 0 or not 0 < a.cap <= 100:
+            sys.exit("Budget must be above 0 and --cap between 1 and 100.")
         with locked_board() as b:
             b["budget"], b["cap"] = a.weekly, a.cap; b["log"].append(f"{now()} weekly budget {a.weekly:,} tokens, check-in at {a.cap}%")
     elif a.cmd == "shot":
+        if not os.path.isfile(a.path):
+            sys.exit(f"No image at {a.path}.")
+        shots_dir = os.path.join(ROOT, "vault", "screenshots")
+        if os.path.commonpath([os.path.abspath(a.path), shots_dir]) != shots_dir:
+            sys.exit("Screenshots must be saved in vault/screenshots/.")
         rel = os.path.relpath(os.path.abspath(a.path), os.path.join(ROOT, "vault"))
-        if rel.startswith(".."):
-            sys.exit("Screenshots must be saved inside vault/ (use vault/screenshots/).")
         with locked_board() as b:
             b["shots"].append({"date": now(), "path": rel.replace(os.sep, "/"), "caption": a.caption})
             b["log"].append(f"{now()} screenshot: {a.caption}")
@@ -276,6 +285,7 @@ def main(argv):
             print("No board yet. Start one with: python3 tools/board.py init \"<project>\"")
             return
         b = {**empty(), **json.load(open(DATA))}
+        b["phases"] = PHASES
         done, total = progress(b)
         print(f"Board: {b['project']} | phase {b['phase']} | {done}/{total} tasks done | updated {b['updated']}")
         print(f"  usage: {usage_line(b)}")

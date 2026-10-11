@@ -66,7 +66,7 @@ Work the **frontier**: any ticket whose blockers are all done. For a purely line
 
 Do NOT close or modify any parent issue.
 
-After publishing, register every ticket on the status board so the dashboard shows it: `python3 tools/board.py task add <NN> "<title>" --blocked-by <NN,NN>` (omit `--blocked-by` when it has no blockers).
+After publishing, register every ticket on the status board so the dashboard shows it: `python3 tools/board.py task add <NN> "<title>" --blocked-by <NN,NN> --est <tokens>` (omit `--blocked-by` when it has no blockers). The estimate is your best guess of the tokens the ticket will take, including research and review, so the dashboard can compare it with actual use.
 
 <local-ticket-template>
 
