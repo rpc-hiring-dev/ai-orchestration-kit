@@ -1,6 +1,6 @@
 # System plan: AI orchestration kit
 
-Status: draft for A'marri's approval (kickoff interview finished 2026-10-11)
+Status: approved on 2026-10-11
 
 The master document for the orchestration system itself. Each product gets its own plan in `vault/master-plan.md` through `/kickoff`.
 
@@ -79,9 +79,10 @@ No deadlines. Agents work and email any time.
 5. **Retro:** the PM proposes kit changes from what went wrong. Milestone: A'marri approves or declines each.
 
 ## 10. Open questions
-- The Max usage meter can't be read by agents directly. Proposed: the PM tracks the tokens it uses against a weekly estimate and asks you to confirm the real figure from claude.ai settings at the check-in.
-- Which free email service sends alerts. Proposed: Resend's free tier, set up at "go" with your OK; GitHub notification emails are a fallback that needs no new account.
-- Whether the kit becomes a GitHub template repo, so each product starts as a copy. Proposed: yes.
+None. Settled on approval:
+- Agents can't read the Max usage meter, so the PM estimates tokens against a weekly budget and asks A'marri to confirm the real figure at the check-in.
+- Alerts use Resend's free tier, set up by A'marri at "go".
+- The kit becomes a GitHub template repo.
 
 ## Decision log
 - First product: a personal plant-care app. Shipped = available for A'marri's private use without regular debugging or maintenance.

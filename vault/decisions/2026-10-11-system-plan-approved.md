@@ -1,0 +1,1 @@
+- 2026-10-11 System plan approved by A'marri; kit updated to match it (vault/system-plan.md).

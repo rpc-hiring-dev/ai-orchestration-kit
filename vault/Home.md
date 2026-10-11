@@ -3,7 +3,10 @@
 Open this folder (`vault/`) in Obsidian as a vault.
 
 - [[Dashboard]]: live status of every agent and task. Agents rewrite it whenever something changes.
-- [[master-plan]]: the master plan. It appears after `/kickoff`.
+- [[system-plan]]: the standing plan for the agent team itself.
+- [[master-plan]]: the product's master plan. It appears after `/kickoff`.
+- `conventions.md`: naming, structure and design rules every agent follows.
+- `screenshots/`: the build timeline, also shown on the Dashboard.
 - `tickets/`: one note per task, written by `/to-tickets`.
 - `decisions/`: one line per decision the agents made.
 - `handoffs/`: end-of-session notes. The newest one starts the next session.
