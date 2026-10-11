@@ -17,7 +17,7 @@ Run `python3 tools/board.py init "<project name>"`, then `python3 tools/board.py
 
 Call the Skill tool with `grilling` and follow it: rounds of numbered questions, each with your recommended answer, so that "yes" accepts it. Look facts up yourself rather than asking.
 
-Seed the design tree with these branches. Skip a branch only when the owner has already settled it.
+Seed the design tree with these branches. Skip a branch only when the owner has already settled it. The owner's standing answers are in `vault/system-plan.md` (stack, milestones, guardrails, alerts, quality bar): use them as the recommended answers and only ask what this product changes.
 
 - **Outcome:** what problem this solves, for whom, and what "it worked" looks like in numbers or behaviour.
 - **Users:** who uses it, their skill level, devices, accessibility needs.
@@ -25,10 +25,10 @@ Seed the design tree with these branches. Skip a branch only when the owner has 
 - **Features:** for each must-have, the main flow, the edge cases and the failure cases.
 - **Data:** what is stored, where, who owns it, privacy and retention.
 - **Integrations:** outside services, accounts and API keys needed, and who provides them.
-- **Platform and stack:** web, mobile or desktop, languages, frameworks, hosting, budget limits. Recommend one; don't list five.
-- **Design direction:** mood, references the owner likes, brand colours, fonts, icon set (default: Tabler icons). Use `design-taste-frontend` to propose a direction for front-end work.
+- **Platform and stack:** default is a TypeScript and React installable web app on free hosting and database tiers. Ask only what this product needs beyond that, and any budget limits.
+- **Design direction:** mood, references the owner likes, brand colours, fonts, icon set (default: Tabler icons). Use `design-taste-frontend` to propose a direction for front-end work. Animation uses GSAP; React Bits components are copied in one at a time.
 - **Quality bar:** testing standard, performance targets, security needs, browsers and devices to support.
-- **Autonomy:** which decisions agents may make alone, which need the owner, and how the owner wants to be told about progress.
+- **Autonomy:** which decisions agents may make alone and which need the owner. Default to the system plan's guardrails and three milestone drafts. Ask for the alert email address and put it in `.env` as `ALERT_EMAIL_TO`, never in the plan.
 - **Done:** what must be true to call version 1 finished, and how it gets deployed.
 
 After each round, append the settled answers to the "Decision log" section of `vault/master-plan.md`, creating it from `vault/templates/master-plan.md` on the first round. If the session ends mid-interview, nothing is lost.

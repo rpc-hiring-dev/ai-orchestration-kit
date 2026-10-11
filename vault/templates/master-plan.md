@@ -32,10 +32,10 @@ Mood, references, colours, type, icon set and component library.
 Testing standard, performance targets, security needs, and supported browsers and devices.
 
 ## 10. Autonomy rules
-What agents decide alone, what needs the owner, and how progress is reported.
+What agents decide alone, what needs the owner, and how progress is reported. Default: the guardrails in the system plan, email alerts only for milestone drafts, money, stuck tickets and the usage check-in.
 
 ## 11. Milestones
-Ordered milestones, each one demoable on its own.
+The three drafts the owner signs off (features, design, final), and what each must show.
 
 ## 12. Definition of done
 What must be true for version 1 to be finished, and how it gets deployed.

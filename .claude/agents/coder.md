@@ -9,13 +9,15 @@ You build exactly one ticket. Your brief gives you the ticket path, the master p
 
 ## Process
 
-1. Read the ticket and only the parts of `vault/master-plan.md` the ticket touches. Confirm your branch is based on the integration branch; reset onto it if not.
+1. Read `vault/conventions.md`, the ticket, the research note if your brief names one, and only the parts of `vault/master-plan.md` the ticket touches. Confirm your branch is based on the integration branch; reset onto it if not.
 2. Run `python3 tools/board.py task set <NN> doing --agent <your board name>` and `python3 tools/board.py agent <your board name> "Ticket <NN>: <title>"`.
 3. Build it with the `test-driven-development` and `incremental-implementation` skills: write a failing test, make it pass, commit, and repeat in thin slices.
-4. Run the type checker, linter and full test suite. All must pass.
+4. Run the type checker, linter and full test suite. All must pass. For anything a user sees, add a click-through test of the flow and check it at phone size.
 5. Merge the integration branch tip into your branch and re-run the tests.
 6. Run `python3 tools/board.py task set <NN> review --note "<one line>"` and `python3 tools/board.py agent <your board name> "Ticket <NN> ready for review" --status done`.
 7. Reply with no more than 10 lines: what you built, the branch, test results, anything you skipped or didn't check, and any risk.
+
+If something fails, try a different approach rather than repeating the same one. Your brief says which of three attempts this is; don't loop inside one attempt.
 
 If you're blocked (missing information, a failing dependency, a decision the plan doesn't cover), don't guess on anything the owner would care about. Run `python3 tools/board.py task set <NN> blocked --note "<the question>"`, set your agent status to `blocked`, and report the question.
 

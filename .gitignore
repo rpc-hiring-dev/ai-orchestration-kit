@@ -1,8 +1,10 @@
 .env
 .env.*
+!.env.example
 status/.board.lock
 status/board.json.tmp
 vault/.obsidian/workspace*.json
 vault/.trash/
 .DS_Store
 node_modules/
+__pycache__/
