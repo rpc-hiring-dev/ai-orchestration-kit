@@ -23,6 +23,10 @@ The master document for the orchestration system itself. Product plans live in `
 - Products ship as installable web apps (PWA). A'marri's phone: Google Pixel 9 (Android), so web push reminders work.
 - Accounts: only GitHub today. Default free tiers: Vercel (hosting) and Supabase (database, login). A'marri creates them when a build needs them.
 - One standard stack for every product: TypeScript and React. Changes need A'marri's OK.
+- New design resources: GSAP (animation library, free; install from npm per product) and React Bits (copy individual animated components per product, not the whole pack).
+- Vercel and Supabase connect per product repo only. Agents check visuals with a browser (screenshots and click-through tests). Only the researcher looks up library docs; coders read its notes.
+- Dashboard: browser page and Obsidian note in A'marri's PC folder, plus live thread status. Shows each agent's task, status, last update, blocker, current milestone, percent complete, token usage (estimated and actual), and build screenshots over time as a before-to-after transformation view.
+- Alerts only for milestone drafts, money, and stuck agents: Claude app push, plus email or text per product. Contacts are kept with each product, never in the kit or memory.
 
 ## Open questions
 - None yet beyond Rounds 4 to 8.
