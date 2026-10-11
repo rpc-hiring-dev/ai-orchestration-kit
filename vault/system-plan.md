@@ -10,6 +10,14 @@ The master document for the orchestration system itself. Product plans live in `
 - Failure: dropping 15% or more of the master plan because it can't be built or maintained, or needing debugging every day or two. Must look professional and aesthetic, and last.
 - Budget: Claude Max $100/month. Avoid paid APIs and token purchases (not a deal breaker long term). Free APIs are fine.
 - Master document lives in the kit's vault folder.
+- Build on the existing kit; the plant app is its first real test.
+- Roles: PM, coders, reviewer, tester, security and performance checkers, designer, researcher. A second-model auditor is wanted later.
+- Done = tests pass and a reviewer agent approves. A'marri signs off only at milestones and paywalls.
+- Up to 3 coders at once; revisit when other models join.
+- Stuck: 3 attempts total, then the PM, which pings A'marri rather than retrying further.
+- Milestone drafts: features (working plain app at a private link), design (styled, with screenshots), final (finished app plus a short usage note). Reply "approved" or changes.
+- Usage limit mid-build: PM writes a handoff, pauses, resumes next window without asking.
+- Priority order restated: quality, then token saving, then automation.
 
 ## Open questions
-- Build on the existing kit or start fresh (A'marri asked for clarification).
+- How the second-model auditor works (proposed: Claude fresh-context auditor now, another model at milestones later).
