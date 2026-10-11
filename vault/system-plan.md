@@ -27,6 +27,13 @@ The master document for the orchestration system itself. Product plans live in `
 - Vercel and Supabase connect per product repo only. Agents check visuals with a browser (screenshots and click-through tests). Only the researcher looks up library docs; coders read its notes.
 - Dashboard: browser page and Obsidian note in A'marri's PC folder, plus live thread status. Shows each agent's task, status, last update, blocker, current milestone, percent complete, token usage (estimated and actual), and build screenshots over time as a before-to-after transformation view.
 - Alerts only for milestone drafts, money, and stuck agents: Claude app push, plus email or text per product. Contacts are kept with each product, never in the kit or memory.
+- Alerts by email only for now (free); no paid texts.
+- GSAP is the one animation library; Motion is dropped.
+- Survives between sessions: decisions, conventions, ticket status, open questions. Chat history and dead ends are forgotten. Reassess later if needed.
+- Handoffs live in each product's vault (synced to the PC folder). Max 60 lines. Coders report to the PM in 10 lines or fewer; only the PM writes the session handoff.
+- Standards: the kit's code review and design skills, plus one design system per product set at the design milestone.
+- Done requires automated tests for logic, a click-through test of each main flow, and a phone-size screenshot check.
+- Consistency: a short conventions note per product that every agent reads first; the reviewer rejects work that breaks it.
 
 ## Open questions
 - None yet beyond Rounds 4 to 8.
