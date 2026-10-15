@@ -1,0 +1,1 @@
+- 2026-10-15 A'marri approved adding Agent Reach to Parked tools (vault/Parked tools.md).
