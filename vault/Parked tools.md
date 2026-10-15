@@ -5,6 +5,7 @@ Saved for when builds start. Add each one to a project only when that project ne
 | Tool | Use it when | How to add |
 |---|---|---|
 | [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Any project with a UI. It generates a design system from bundled style, palette and font data. | `npx ui-ux-pro-max-cli init --ai claude` in the project |
+| [Agent Reach](https://github.com/Panniantong/Agent-Reach) | The researcher needs web search or page reading beyond the built-in tools: Exa search, Jina page reader, YouTube subtitles, RSS. The owner's preferred research tool. | `pip install git+https://github.com/Panniantong/Agent-Reach.git`, then `agent-reach doctor`. Exa search also needs `npx mcporter config add exa https://mcp.exa.ai/mcp`. Cloud environments must allow `mcp.exa.ai` and `r.jina.ai`. |
 | [Graphify](https://github.com/Graphify-Labs/graphify) | The codebase is big enough that agents waste time searching | `uv tool install graphifyy`, then `graphify install` |
 | [Motion AI Kit](https://motion.dev/docs/ai-kit-install) | The project uses the Motion animation library | `npx motion-ai` |
 | [Watermelon UI](https://github.com/WatermelonCorp/watermelon-platform) | A React or shadcn front end that needs ready-made blocks | Hosted connector at `https://mcp.watermelon.sh/mcp` |
