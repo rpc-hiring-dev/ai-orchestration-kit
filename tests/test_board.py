@@ -88,7 +88,7 @@ class BoardTest(unittest.TestCase):
 
 class NotifyTest(unittest.TestCase):
     def test_without_settings_it_exits_1(self):
-        env = {k: v for k, v in os.environ.items() if k not in ("RESEND_API_KEY", "ALERT_EMAIL_TO")}
+        env = {k: v for k, v in os.environ.items() if k not in ("RESEND_API_KEY", "ALERT_EMAIL_TO", "TELEGRAM_BOT_TOKEN", "TELEGRAM_BOT_API_KEY", "TELEGRAM_CHAT_ID")}
         root = tempfile.mkdtemp()
         os.makedirs(os.path.join(root, "tools"))
         shutil.copy(os.path.join(KIT, "tools", "notify.py"), os.path.join(root, "tools"))

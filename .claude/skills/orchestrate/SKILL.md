@@ -42,9 +42,11 @@ The **frontier** is every `todo` ticket whose blockers are all `done`. `board.py
 1. For each frontier ticket, up to the parallel limit (default 3): if it uses a library, API or approach not yet in `vault/research/`, start a `researcher` first. Then start a `coder` **in the background, in its own worktree**, with this brief and nothing more:
    `Ticket: vault/tickets/<NN>-<slug>.md. Plan: vault/master-plan.md. Conventions: vault/conventions.md. Research: vault/research/<NN>-<slug>.md (if any). Branch from build/<slug> as ticket/<NN>. Your board name is coder-<NN>. Attempt <k> of 3.`
 2. When a coder reports done, start a `code-reviewer` on its branch. If the ticket touches login, user input or personal data, also start `security-auditor`. Done means the tests pass and the reviewer approves.
-3. If a reviewer finds Critical or Required problems, or the coder fails, start a new `coder` with the ticket path plus the findings. **Three attempts in total.** After the third, mark the ticket `blocked`, email the owner the question with your recommended answer, and move on. Never retry past three.
+3. If a reviewer finds Critical or Required problems, or the coder fails, start a new `coder` with the ticket path plus the findings. **Three attempts in total.** After the third, mark the ticket `blocked`, alert the owner with the question with your recommended answer, and move on. Never retry past three.
 4. When the work is clean, merge `ticket/<NN>` into `build/<slug>`, then run `python3 tools/board.py task set <NN> done`. Remove the worktree.
-5. Run `python3 tools/board.py show`. If the usage line says CHECK IN, finish what's running, write a handoff, and email the owner: tokens used this week and a recommended percent to continue to. Wait for their number, then `budget <same> --cap <their percent>`.
+
+**Parallel coders.** Worktrees live in `.claude/worktrees/` (git-ignored; lint and test tools must ignore it too). Never run `npm ci` or reinstall in the main checkout while worktree agents run, since they may share its `node_modules`: each worktree runs its own `npm ci`. Give each coder a unique port for browser tests (e.g. `PW_PORT=41<NN>`) and make the e2e config read it, so parallel runs don't collide.
+5. Run `python3 tools/board.py show`. If the usage line says CHECK IN, finish what's running, write a handoff, and alert the owner: tokens used this week and a recommended percent to continue to. Wait for their number, then `budget <same> --cap <their percent>`.
 6. If a Max usage limit stops agents mid-build, write a handoff and resume in the next window without asking.
 7. Recompute the frontier and repeat. Update your own line with `board.py agent manager "<what you're doing>"` each time.
 
@@ -56,7 +58,7 @@ The build has three drafts the owner signs off. Order the tickets so each draft 
 2. **Design draft:** run `python3 tools/board.py phase "Design draft"`. Start the `designer` to write the design system and restyle every screen. Send screenshots.
 3. **Final draft:** run `python3 tools/board.py phase "Final draft"`. The finished app plus a short how-to.
 
-At each one: run `code-reviewer`, `test-engineer`, `security-auditor` and `web-performance-auditor` on `build/<slug>` and fix what they find with `coder` agents. Then start `auditor` (fresh eyes, plan and product only) and fix anything it calls blocking. Save phone-size screenshots to `vault/screenshots/` and run `board.py shot` for each. Then email the owner the link, screenshots and a five-line summary, and wait for "approved" or changes before the next milestone. Keep building any tickets that don't depend on their answer.
+At each one: run `code-reviewer`, `test-engineer`, `security-auditor` and `web-performance-auditor` on `build/<slug>` and fix what they find with `coder` agents. Then start `auditor` (fresh eyes, plan and product only) and fix anything it calls blocking. Save phone-size screenshots to `vault/screenshots/` and run `board.py shot` for each. Then alert the owner with the link, screenshots and a five-line summary, and wait for "approved" or changes before the next milestone. Keep building any tickets that don't depend on their answer.
 
 ## Decisions and blockers
 
@@ -70,5 +72,5 @@ When the final draft is approved:
 
 1. Work through the `shipping-and-launch` skill against the "Definition of done" section of the master plan. Going live or anything public needs the owner's OK.
 2. Run `python3 tools/board.py phase Shipped` and `python3 tools/board.py agent manager "Shipped" --status done`.
-3. Write a retro in `vault/decisions/<date>-retro.md`: what went wrong and the kit changes you'd suggest. Email the owner the suggestions; change the kit only after they approve.
+3. Write a retro in `vault/decisions/<date>-retro.md`: what went wrong and the kit changes you'd suggest. Alert the owner with the suggestions; change the kit only after they approve.
 4. Write a handoff and tell the owner what was built, where it is, and anything left for them.

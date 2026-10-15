@@ -12,7 +12,7 @@ This repo is an agent team. The owner describes a product once, and agents plan 
 - `vault/` is the Obsidian vault and the single source of truth: master plan, conventions, specs, tickets, research notes, decisions, handoffs and screenshots.
 - `vault/system-plan.md` holds the owner's standing answers for every product (stack, guardrails, milestones, alerts).
 - `tools/board.py` is the status board, including token use and the screenshot timeline. Every agent reports through it, and nobody edits `status/board.json` by hand.
-- `tools/notify.py` emails the owner, only for milestone drafts, money, stuck tickets and the usage check-in.
+- `tools/notify.py` alerts the owner (Telegram push, email, or both), only for milestone drafts, money, stuck tickets and the usage check-in.
 - `vault/Dashboard.md` and `dashboard/index.html` are generated views of the board.
 
 ## Tracker

@@ -8,3 +8,4 @@ vault/.trash/
 .DS_Store
 node_modules/
 __pycache__/
+.claude/worktrees/
