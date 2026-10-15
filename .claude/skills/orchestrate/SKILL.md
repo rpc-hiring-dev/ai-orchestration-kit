@@ -42,13 +42,13 @@ The **frontier** is every `todo` ticket whose blockers are all `done`. `board.py
 1. For each frontier ticket, up to the parallel limit (default 3): if it uses a library, API or approach not yet in `vault/research/`, start a `researcher` first. Then start a `coder` **in the background, in its own worktree**, with this brief and nothing more:
    `Ticket: vault/tickets/<NN>-<slug>.md. Plan: vault/master-plan.md. Conventions: vault/conventions.md. Research: vault/research/<NN>-<slug>.md (if any). Branch from build/<slug> as ticket/<NN>. Your board name is coder-<NN>. Attempt <k> of 3.`
 2. When a coder reports done, start a `code-reviewer` on its branch. If the ticket touches login, user input or personal data, also start `security-auditor`. Done means the tests pass and the reviewer approves.
-3. If a reviewer finds Critical or Required problems, or the coder fails, start a new `coder` with the ticket path plus the findings. **Three attempts in total.** After the third, mark the ticket `blocked`, alert the owner with the question with your recommended answer, and move on. Never retry past three.
+3. If a reviewer finds Critical or Required problems, or the coder fails, start a new `coder` with the ticket path plus the findings. **Three attempts in total.** After the third, mark the ticket `blocked`, alert the owner with the question and your recommended answer, and move on. Never retry past three.
 4. When the work is clean, merge `ticket/<NN>` into `build/<slug>`, then run `python3 tools/board.py task set <NN> done`. Remove the worktree.
-
-**Parallel coders.** Worktrees live in `.claude/worktrees/` (git-ignored; lint and test tools must ignore it too). Never run `npm ci` or reinstall in the main checkout while worktree agents run, since they may share its `node_modules`: each worktree runs its own `npm ci`. Give each coder a unique port for browser tests (e.g. `PW_PORT=41<NN>`) and make the e2e config read it, so parallel runs don't collide.
 5. Run `python3 tools/board.py show`. If the usage line says CHECK IN, finish what's running, write a handoff, and alert the owner: tokens used this week and a recommended percent to continue to. Wait for their number, then `budget <same> --cap <their percent>`.
 6. If a Max usage limit stops agents mid-build, write a handoff and resume in the next window without asking.
 7. Recompute the frontier and repeat. Update your own line with `board.py agent manager "<what you're doing>"` each time.
+
+**Parallel coders.** Worktrees live in `.claude/worktrees/` (git-ignored; lint and test tools must ignore it too). Never run `npm ci` or reinstall in the main checkout while worktree agents run, since they may share its `node_modules`: each worktree runs its own `npm ci`. Give each coder a unique port for browser tests (e.g. `PW_PORT=41<NN>`) and make the e2e config read it, so parallel runs don't collide.
 
 ## Milestones
 

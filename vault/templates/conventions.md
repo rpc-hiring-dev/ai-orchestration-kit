@@ -21,7 +21,7 @@ Points to `vault/design-system.md` once the designer writes it. Icons: Tabler. A
 Automated tests for logic, a click-through test of each main flow, and a screenshot check at phone size before a ticket is done.
 Run e2e with a unique `PW_PORT` (e.g. 4100 + ticket number) when other agents may be running tests; the e2e config reads it.
 Lint and test configs ignore `.claude/worktrees/`.
+Never run `npm ci` in the main checkout while agents run: worktrees may share its node_modules. Give each worktree its own `npm ci`.
 
 ## Secrets
 Keys and contact details go in `.env`, never in the vault or code.
-Never run `npm ci` in the main checkout while agents run: worktrees may share its node_modules. Give each worktree its own `npm ci`.

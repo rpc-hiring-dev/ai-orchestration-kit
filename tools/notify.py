@@ -59,8 +59,12 @@ def find_chat():
     if not os.environ.get("TELEGRAM_BOT_TOKEN"):
         print("TELEGRAM_BOT_TOKEN isn't set.")
         return 1
-    with urllib.request.urlopen(telegram("getUpdates", {}), timeout=20) as r:
-        updates = json.load(r).get("result", [])
+    try:
+        with urllib.request.urlopen(telegram("getUpdates", {}), timeout=20) as r:
+            updates = json.load(r).get("result", [])
+    except Exception as err:
+        print(f"Couldn't reach the bot: {err}")
+        return 1
     chats = [u["message"]["chat"]["id"] for u in updates if "message" in u]
     if not chats:
         print("No messages yet. Ask the owner to send the bot any message, then retry.")
@@ -88,7 +92,7 @@ def main(argv):
         return 0
     sent = False
     if bot and chat:
-        sent |= send(telegram("sendMessage", {"chat_id": chat, "text": f"{a.subject}\n\n{a.body}"}), "push")
+        sent |= send(telegram("sendMessage", {"chat_id": chat, "text": f"{a.subject}\n\n{a.body}"[:4096]}), "push")
     if key and to:
         sent |= send(urllib.request.Request("https://api.resend.com/emails", data=json.dumps(msg).encode(),
                                             headers={"Authorization": f"Bearer {key}",
