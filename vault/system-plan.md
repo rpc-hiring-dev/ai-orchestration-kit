@@ -26,7 +26,7 @@ See "Decision log" at the end of this file. Every answer and accepted default is
 - **Auditor:** a fresh-context Claude that sees only the plan and the finished work, at each milestone. A second model can join later at milestones only, after A'marri's OK.
 
 **Task done** = tests pass and the reviewer approves.
-**Stuck** = 3 attempts in total, then the PM, which emails A'marri instead of retrying.
+**Stuck** = 3 attempts in total, then the PM, which alerts A'marri instead of retrying.
 **Usage limit** = the PM writes a handoff, pauses and resumes in the next window on its own.
 
 **Milestones A'marri signs off:** features (a working plain app at a private link), design (fully styled, with screenshots), final (finished app plus a short how-to). They reply "approved" or list changes.
@@ -41,7 +41,7 @@ See "Decision log" at the end of this file. Every answer and accepted default is
 | Vercel (hosting), Supabase (database, login) | Free tiers, connected inside each product repo only | None in other sessions |
 | GSAP | Installed from npm per product | None until used |
 | React Bits | Individual components copied in as needed | Low |
-| Email alerts | A free email service, set up at "go" | None |
+| Alerts | A private Telegram bot (free), with Resend email as an option | None |
 | Obsidian | Opens the vault in A'marri's PC folder | None |
 Per-project later: graphify, watermelon-platform, bklit-ui. Motion is dropped in favour of GSAP. Parked links stay in "Parked tools".
 
@@ -52,7 +52,7 @@ Lives as a browser page and the Obsidian Dashboard note in A'marri's PC folder, 
 - token use, estimated and actual, per ticket and in total;
 - build screenshots over time, shown as a before-to-after transformation timeline.
 
-Alerts go by email only for milestone drafts, anything that costs money, stuck agents and the usage check-in. Nothing for routine progress. Contacts are kept with each product, never in the kit or memory.
+Alerts go by Telegram push (or email) only for milestone drafts, anything that costs money, stuck agents and the usage check-in. Nothing for routine progress. Contacts are kept with each product, never in the kit or memory.
 
 ## 6. Handoff template and rules
 - The PM writes one handoff per session, under 60 lines, in the product's vault. It auto-loads next session.
@@ -69,7 +69,7 @@ Alerts go by email only for milestone drafts, anything that costs money, stuck a
 ## 8. Guardrails
 Need A'marri's approval: spending money, making anything public, deleting data, repos or accounts, adding an outside service or key, changing the stack, changing the kit itself, and continuing past half the week's Max usage (A'marri names the percent).
 Agents may do alone: merge reviewed work, update private preview links, make choices the master plan's autonomy rules allow (logged in `vault/decisions/`).
-No deadlines. Agents work and email any time.
+No deadlines. Agents work and send alerts any time.
 
 ## 9. Build order
 1. **Update the kit:** add researcher, designer and auditor agents; set the 3-attempt rule, milestone drafts, usage check-in and guardrails in `/orchestrate`; add the conventions note; add token use and screenshot timeline to the board and dashboard. Milestone: a dry run on a tiny sample app passes end to end.
@@ -81,7 +81,7 @@ No deadlines. Agents work and email any time.
 ## 10. Open questions
 None. Settled on approval:
 - Agents can't read the Max usage meter, so the PM estimates tokens against a weekly budget and asks A'marri to confirm the real figure at the check-in.
-- Alerts use Resend's free tier, set up by A'marri at "go".
+- Alerts use a free Telegram bot (chosen 2026-10-11). Resend's free tier was tried first and only delivers to its own account address; ntfy's free quota is shared per cloud IP.
 - The kit becomes a GitHub template repo.
 
 ## Decision log
@@ -107,7 +107,7 @@ None. Settled on approval:
 - Vercel and Supabase connect per product repo only. Agents check visuals with a browser (screenshots and click-through tests). Only the researcher looks up library docs; coders read its notes.
 - Dashboard: browser page and Obsidian note in A'marri's PC folder, plus live thread status. Shows each agent's task, status, last update, blocker, current milestone, percent complete, token usage (estimated and actual), and build screenshots over time as a before-to-after transformation view.
 - Alerts only for milestone drafts, money, and stuck agents: Claude app push, plus email or text per product. Contacts are kept with each product, never in the kit or memory.
-- Alerts by email only for now (free); no paid texts.
+- Alerts by Telegram push for now (free), email optional; no paid texts.
 - GSAP is the one animation library; Motion is dropped.
 - Survives between sessions: decisions, conventions, ticket status, open questions. Chat history and dead ends are forgotten. Reassess later if needed.
 - Handoffs live in each product's vault (synced to the PC folder). Max 60 lines. Coders report to the PM in 10 lines or fewer; only the PM writes the session handoff.
@@ -117,6 +117,6 @@ None. Settled on approval:
 - Guardrails: never without approval: spend money, make anything public, delete data, repos or accounts, add a new outside service or key, change the standard stack. Agents may merge reviewed work and update private preview links.
 - No deadlines; quality over speed.
 - Builds may use about half the weekly Max usage. At that point the PM asks A'marri whether to continue and up to what percent, instead of pausing on its own.
-- Agents work and email any time.
+- Agents work and send alerts any time.
 - After each product the PM proposes kit changes; A'marri approves before they're made.
 - Plant app data is private: only A'marri can sign in, nothing is shared, export or delete any time.

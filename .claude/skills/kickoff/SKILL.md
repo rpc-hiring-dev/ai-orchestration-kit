@@ -28,7 +28,7 @@ Seed the design tree with these branches. Skip a branch only when the owner has 
 - **Platform and stack:** default is a TypeScript and React installable web app on free hosting and database tiers. Ask only what this product needs beyond that, and any budget limits.
 - **Design direction:** mood, references the owner likes, brand colours, fonts, icon set (default: Tabler icons). Use `design-taste-frontend` to propose a direction for front-end work. Animation uses GSAP; React Bits components are copied in one at a time.
 - **Quality bar:** testing standard, performance targets, security needs, browsers and devices to support.
-- **Autonomy:** which decisions agents may make alone and which need the owner. Default to the system plan's guardrails and three milestone drafts. Ask for the alert email address and put it in `.env` as `ALERT_EMAIL_TO`, never in the plan.
+- **Autonomy:** which decisions agents may make alone and which need the owner. Default to the system plan's guardrails and three milestone drafts. Set up alerts: the owner's Telegram bot token and chat id (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`; `python3 tools/notify.py --find-chat` finds the id) and, if they want email too, `ALERT_EMAIL_TO`. These go in `.env` or the cloud environment, never in the plan.
 - **Done:** what must be true to call version 1 finished, and how it gets deployed.
 
 After each round, append the settled answers to the "Decision log" section of `vault/master-plan.md`, creating it from `vault/templates/master-plan.md` on the first round. If the session ends mid-interview, nothing is lost.
