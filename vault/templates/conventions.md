@@ -23,5 +23,8 @@ Run e2e with a unique `PW_PORT` (e.g. 4100 + ticket number) when other agents ma
 Lint and test configs ignore `.claude/worktrees/`.
 Never run `npm ci` in the main checkout while agents run: worktrees may share its node_modules. Give each worktree its own `npm ci`.
 
+## Test data
+Every seed and test row is marked (for example `source = 'seed'` or an id prefix) so go-live removes them in one step. Settings that choose a data source default to the live source in production; fixtures are for tests only.
+
 ## Secrets
 Keys and contact details go in `.env`, never in the vault or code.

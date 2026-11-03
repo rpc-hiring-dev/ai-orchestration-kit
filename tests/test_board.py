@@ -64,6 +64,12 @@ class BoardTest(unittest.TestCase):
         self.board("phase", "Design draft")
         self.assertEqual(self.data()["phase"], "Design draft")
 
+    def test_go_live_phase_sits_between_final_draft_and_shipped(self):
+        self.board("phase", "Go-live")
+        phases = self.data()["phases"]
+        self.assertEqual(phases.index("Go-live"), phases.index("Final draft") + 1)
+        self.assertEqual(phases.index("Shipped"), phases.index("Go-live") + 1)
+
     def test_old_board_with_old_phases_accepts_new_ones(self):
         path = os.path.join(self.root, "status", "board.json")
         b = self.data(); b["phases"] = ["Discovery", "Build", "Review", "Ship"]

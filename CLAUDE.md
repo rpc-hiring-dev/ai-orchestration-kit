@@ -5,12 +5,14 @@ This repo is an agent team. The owner describes a product once, and agents plan 
 ## The workflow
 1. `/kickoff`: interview the owner and write `vault/master-plan.md`.
 2. `/to-tickets`: split the approved plan into tickets in `vault/tickets/`.
-3. `/orchestrate`: the main session becomes the project manager and runs researcher, coder, designer, reviewer and auditor agents through three milestone drafts (features, design, final) the owner signs off.
+3. `/orchestrate`: the main session becomes the project manager and runs researcher, coder, designer, reviewer and auditor agents through three milestone drafts (features, design, final) the owner signs off, then go-live (import rehearsal, real data, a parallel run with the old way).
+   In a cloud session where these commands aren't installed, read `.claude/skills/<name>/SKILL.md` and follow it.
 4. `/handoff`: write a handoff note before any session ends.
 
 ## Where things live
 - `vault/` is the Obsidian vault and the single source of truth: master plan, conventions, specs, tickets, research notes, decisions, handoffs and screenshots.
-- `vault/system-plan.md` holds the owner's standing answers for every product (stack, guardrails, milestones, alerts).
+- `vault/system-plan.md` holds the owner's standing answers for every product (stack, guardrails, milestones, alerts). The owner's name is at its top; skills say "the owner".
+- `env.manifest` lists every key and setting the product needs (names only). `tools/preflight.py` checks them; `vault/setup-traps.md` lists setup mistakes to avoid.
 - `tools/board.py` is the status board, including token use and the screenshot timeline. Every agent reports through it, and nobody edits `status/board.json` by hand.
 - `tools/notify.py` alerts the owner (Telegram push, email, or both), only for milestone drafts, money, stuck tickets and the usage check-in.
 - `vault/Dashboard.md` and `dashboard/index.html` are generated views of the board.
