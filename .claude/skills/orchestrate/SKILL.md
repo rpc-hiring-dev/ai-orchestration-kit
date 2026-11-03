@@ -15,12 +15,12 @@ Adapted from Matt Pocock's `implement-spec` (MIT).
 
 - Talk to agents through **pointers**: the ticket path, `vault/master-plan.md`, `vault/conventions.md`, the branch name. Don't paste their contents.
 - Ask every agent for a report of 10 lines or fewer. Don't read whole diffs yourself; the reviewers do that.
-- You alone record token use: after each agent finishes, run `python3 tools/board.py tokens <n> --task <NN>` with the usage its result reports. Agents never record their own, so nothing is counted twice.
+- You alone run `tools/board.py`, from the main checkout (in a worktree it edits that copy of the board). You alone record token use: after each agent finishes, run `python3 tools/board.py tokens <n> --task <NN>` with the usage its result reports. Agents never record their own, so nothing is counted twice.
 - When your context is getting long, or before you stop, call the Skill tool with `handoff`.
 
 ## Guardrails (never without the owner's OK)
 
-Spending money, making anything public, deleting data, repos or accounts, adding an outside service or API key, changing the stack, or changing the kit itself. You may merge reviewed work and update private preview links alone.
+Spending money, making anything public, deleting data, repos or accounts, adding an outside service or API key, changing the stack, or changing the kit itself. You may merge reviewed work and update private preview links alone. Once real people use the product, the "Live changes" rule in `CLAUDE.md` applies too: each migration, deploy, secret and switch-on needs the owner's OK.
 
 ## Telling the owner
 
@@ -56,7 +56,7 @@ The **frontier** is every `todo` ticket whose blockers are all `done`. `board.py
    `Ticket: vault/tickets/<NN>-<slug>.md. Plan: vault/master-plan.md. Conventions: vault/conventions.md. Research: vault/research/<NN>-<slug>.md (if any). Branch from build/<slug> as ticket/<NN>. Your board name is coder-<NN>. Attempt <k> of 3.`
 2. When a coder reports done, start a `code-reviewer` on its branch. If the ticket touches login, user input or personal data, also start `security-auditor`. Done means the tests pass and the reviewer approves.
 3. If a reviewer finds Critical or Required problems, or the coder fails, start a new `coder` with the ticket path plus the findings. **Three attempts in total.** After the third, mark the ticket `blocked`, alert the owner with the question and your recommended answer, and move on. Never retry past three.
-4. When the work is clean, merge `ticket/<NN>` into `build/<slug>`, then run `python3 tools/board.py task set <NN> done`. Remove the worktree.
+4. When the work is clean, merge `ticket/<NN>` into `build/<slug>` and confirm the merge commit exists. Only then, in a **separate command**, remove the worktree and delete the ticket branch (a failed merge chained to a branch delete loses the work). Commit any screenshots the coder left untracked in the main checkout. Run `python3 tools/board.py task set <NN> done`.
 5. Run `python3 tools/board.py show`. If the usage line says CHECK IN, finish what's running, write a handoff, and alert the owner: tokens used this week and a recommended percent to continue to. Wait for their number, then `budget <same> --cap <their percent>`.
 6. If a Max usage limit stops agents mid-build, write a handoff and resume in the next window without asking.
 7. Recompute the frontier and repeat. Update your own line with `board.py agent manager "<what you're doing>"` each time.
@@ -68,14 +68,14 @@ The **frontier** is every `todo` ticket whose blockers are all `done`. `board.py
 The build has three drafts the owner signs off. Order the tickets so each draft can be shown on its own.
 
 1. **Features draft:** every must-have works, plainly styled, at a private preview link.
-2. **Design draft:** run `python3 tools/board.py phase "Design draft"`. First start the `designer` to make 2–3 clearly different looks on the three most-used screens, at phone and desktop size, and send the owner the screenshots side by side. When they pick one (or a mix), log it in `vault/decisions/`, then start the `designer` again to write the design system from that look and restyle every screen. Send screenshots.
-3. **Final draft:** run `python3 tools/board.py phase "Final draft"`. The finished app plus a short how-to.
+2. **Design draft:** run `python3 tools/board.py phase "Design draft"`. First start the `designer` to make 2–3 clearly different looks on the three most-used screens, at phone and desktop size, and send the owner the screenshots side by side. When they pick one (or a mix), log it in `vault/decisions/`, then start the `designer` again to write the design system from that look and restyle every screen. Before sending the draft, start the `designer` once more for a **polish pass** (see the designer's "Polish pass" step) and include its before-and-after screenshots.
+3. **Final draft:** run `python3 tools/board.py phase "Final draft"`. The finished app plus **role guides**: one short guide per kind of user (for example admin, crew, customer), in plain words with phone screenshots of the main tasks, saved in `vault/guides/<role>.md`, plus a printable PDF for anyone who won't read it in the app. Keep them current: every `/feature` change that alters what a role does updates its guide.
 
 At each one: run `code-reviewer`, `test-engineer`, `security-auditor` and `web-performance-auditor` on `build/<slug>` and fix what they find with `coder` agents. Then start `auditor` (fresh eyes, plan and product only) and fix anything it calls blocking. Save phone-size screenshots to `vault/screenshots/` and run `board.py shot` for each. Then alert the owner with the link, screenshots and a five-line summary, and wait for "approved" or changes before the next milestone. Keep building any tickets that don't depend on their answer.
 
 ## Changes after a draft
 
-Owners keep asking for changes once they use a draft. Handle each request as its own small branch and pull request into the integration branch: build, review, phone and desktop screenshots, merge. A database migration or anything on the guardrail list needs the owner's OK before it runs, even mid-request. Log each request's outcome in `vault/decisions/`.
+Owners keep asking for changes once they use a draft, and after launch that becomes most of the work. Run each request through the `feature` skill, ideally in its own thread: branch, review, before-and-after screenshots, a pull request, the owner's OK to merge, then each live step with its own OK. Keep building tickets that don't depend on it.
 
 ## Decisions and blockers
 
@@ -85,15 +85,20 @@ Owners keep asking for changes once they use a draft. Handle each request as its
 
 ## Go-live
 
-When the final draft is approved, run `python3 tools/board.py phase Go-live` and follow the master plan's "Go-live" section:
+When the final draft is approved, run `python3 tools/board.py phase Go-live` and follow the master plan's "Go-live" section.
+
+First write `vault/go-live-plan.md`: every step in order, each marked with who does it (**OWNER**, **PM**, or the team), and **[OWNER OK]** on every step that changes something live. Each switch (domain, data source, emails, scheduled jobs) has a one-line way to undo it. Things that must not run twice, such as the old system's scheduled jobs and the new one's, are listed with when each goes off or on. The owner approves the plan before step 1.
 
 1. **Rehearse each import.** Read each real source and write `vault/research/import-rehearsal-<source>.md`: rows found, totals compared with the source, and every gap or odd row listed with your recommended answer. Change nothing in the live database yet. Ask the owner all the gap questions at once.
 2. **Walk the main user through it.** Have the person who will use it daily do one real task in the app, live or recorded. What they trip over goes into change requests before the cutover, not after.
 3. **Clear the test data.** Deleting data needs the owner's OK: show the counts of seed rows you'll remove and of real rows you'll keep. Then remove only the marked seed rows.
 4. **Import for real** from the rehearsed scripts, and check the totals against the rehearsal.
-5. **Switch every source to live.** Run `python3 tools/preflight.py --live` and fix every FAIL. Ask the owner to confirm the "by hand" settings, then open each page that reads outside data and check it shows real rows.
-6. **Run alongside the old way** for the agreed period (default one week). The team keeps using the old sheet or tool as well. At the end, compare the totals line by line and list any differences.
-7. **Retire the old way** only with the owner's OK.
+5. **Gates before anyone outside the team signs in.** If the product keeps its own data, both must pass:
+   - **Backup and restore.** The nightly backup has run on schedule, and a restore test into a scratch database succeeded and is logged in `vault/decisions/`.
+   - **Security check against the live database.** Start `security-auditor` with the live setup: who can read and write each table, what the public key can reach, storage buckets, server functions. Save its probes as a re-runnable script that only writes rows it plants itself and rolls back, and the report in `vault/research/security-check-<date>.md`. Fix every Critical or Required finding first.
+6. **Switch every source to live.** Run `python3 tools/preflight.py --live` and fix every FAIL. Ask the owner to confirm the "by hand" settings, then open each page that reads outside data and check it shows real rows.
+7. **Run alongside the old way** for the agreed period (default one week). The team keeps using the old sheet or tool as well. At the end, compare the totals line by line and list any differences.
+8. **Retire the old way** only with the owner's OK. Keep the undo steps in the go-live plan until then.
 
 ## Finish
 

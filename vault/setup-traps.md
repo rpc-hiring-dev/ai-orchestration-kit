@@ -16,12 +16,21 @@ Things that cost real time on earlier builds. The PM reads this before asking th
 - **Google sheets read by a service account** must be shared with its email as Viewer.
 - **Internal Google OAuth apps** must be created in the same Workspace as the inbox they read.
 - **Free tiers run out mid-month** (e.g. hosting build credits). Check remaining credits before planning a redeploy on a free tier.
+- **Email quotas count incoming mail too.** On Resend's free plan (100 a day), inbound email shares the daily limit with outgoing. One flapping alarm sent about 350 alert emails and every app email failed for a day. When an email "didn't go out", check the app's email log for the provider's error first. Route bulk incoming mail elsewhere (e.g. Cloudflare Email Routing to a Worker).
+- **Cloudflare build settings only stick after pressing Save,** and only a push to the production branch builds. Turn preview-branch builds off unless they're wanted.
+- **Anthropic API keys must be workspace-scoped.** An organisation-level key gets a 400 asking for `anthropic-workspace-id`.
 
 ## Cloud sessions (Claude projects)
 - No raw database connections (Postgres ports are blocked) and no Docker. Run migrations through the provider's HTTPS API (Supabase Management API) or CI; test against a local Postgres.
 - Preview hosts such as `*.vercel.app` may be blocked from the container, so only the owner can open preview links.
 - Long branch names truncate to the same preview alias (`claude/project-thread-*`), so an alias can show another branch. Send the production address or the deployment's own link.
 - A hosting import page may always build `main`. Trigger builds by pushing the tracked branch.
+- Allowed-domain changes reach running sessions within about a minute; secrets don't (see above).
+- The auto-mode safety check refuses writes to secrets and sign-in settings unless the owner OK'd that exact change in the thread. Ask first, by decision card, and quote the change.
+- Edge Function console logs (Supabase) come from the Management API's analytics endpoint (`/v1/projects/<ref>/analytics/endpoints/logs`, ClickHouse SQL `FROM logs WHERE source = 'function_logs'`, a window of 24 hours at most).
+
+## Installable apps (PWA)
+- **Stale copies.** A phone or PC can keep an old version through a hard refresh. Ship a `/version.json` that is never cached, check it on load, and reload to the new version at the next tap (never mid-typing); show the version in Settings. The owner's fix for an already-stuck copy: send any waiting work first, then site settings > Delete data, reload, sign in.
 
 ## Data
 - **Source sheets can mislabel things** (a "profit" column that is really revenue). Check a source's numbers against something the owner trusts before building on it.
