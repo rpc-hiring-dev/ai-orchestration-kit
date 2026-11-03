@@ -11,7 +11,8 @@ A starter repo for building software with a team of Claude agents. You describe 
 | 3 | `/orchestrate` | The session becomes the project manager. A researcher prepares each ticket, up to 3 coders build in parallel, reviewers check each branch, and an auditor with fresh eyes checks each milestone. |
 | 4 | Approve 3 drafts | You get an alert (Telegram push or email) at the features, design and final drafts, and whenever something costs money or a ticket is stuck after 3 attempts. Otherwise watch `dashboard/index.html` or the Dashboard note in Obsidian: tasks, agents, token use and a screenshot timeline. |
 | 5 | Go live | Real data is rehearsed, imported and checked, test data is removed with your OK, every data source is switched to live (`tools/preflight.py --live`), and the app runs alongside your old sheet or tool for a week before that is retired. |
-| 6 | `/handoff` | Writes a short note. The next session starts by reading it, so it doesn't need old chat history. |
+| 6 | `/feature <change>` | After a draft or after launch, each change runs in its own thread: a branch, a pull request with before-and-after screenshots, your OK to merge, then each live step (database change, deploy, secret, switch-on) with your OK and a "What went live" list. |
+| 7 | `/handoff` | Writes a short note. The next session starts by reading it, so it doesn't need old chat history. |
 
 ## What's inside
 
@@ -19,7 +20,7 @@ A starter repo for building software with a team of Claude agents. You describe 
 CLAUDE.md                  short rules loaded into every session
 .claude/
   settings.json            session-start hook (loads the latest handoff and the board)
-  skills/                  kickoff, counterpoints, orchestrate, handoff + vendored skills (see THIRD_PARTY.md)
+  skills/                  kickoff, counterpoints, orchestrate, feature, handoff + vendored skills (see THIRD_PARTY.md)
   agents/                  researcher, coder, designer, auditor, code-reviewer, security-auditor, test-engineer, web-performance-auditor
 tools/board.py             the status board every agent reports to (tasks, tokens, screenshots)
 tools/notify.py            alerts the owner by Telegram push and/or Resend email
@@ -27,7 +28,7 @@ tools/preflight.py         checks the keys and settings listed in env.manifest (
 .env.example               copy to .env for the alert keys and contacts
 vault/                     open this folder in Obsidian
   Home.md, Dashboard.md, system-plan.md, master-plan.md, conventions.md, specs/, tickets/,
-  research/, decisions/, handoffs/, screenshots/, Parked tools.md, setup-traps.md
+  research/, decisions/, handoffs/, screenshots/, guides/, Parked tools.md, setup-traps.md, project-memory.md
 dashboard/index.html       browser dashboard, refreshes every 15s
 status/board.json          board data, written only by board.py
 ```

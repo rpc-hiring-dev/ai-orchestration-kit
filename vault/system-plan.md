@@ -39,7 +39,7 @@ See "Decision log" at the end of this file. Every answer and accepted default is
 | GitHub | Already connected | Low |
 | Claude Code in this project | Where agents run, covered by Max | Uses plan usage |
 | Browser checks | Built in; screenshots and click-through tests | Medium per run, so used at review time only |
-| Vercel (hosting), Supabase (database, login) | Free tiers, connected inside each product repo only | None in other sessions |
+| Hosting: Cloudflare (free) or Vercel Pro, never Vercel's free plan; Supabase (database, login) | Connected inside each product repo only | None in other sessions |
 | GSAP | Installed from npm per product | None until used |
 | React Bits | Individual components copied in as needed | Low |
 | Alerts | A private Telegram bot (free), with Resend email as an option | None |
@@ -53,7 +53,7 @@ Lives as a browser page and the Obsidian Dashboard note in the owner's PC folder
 - token use, estimated and actual, per ticket and in total;
 - build screenshots over time, shown as a before-to-after transformation timeline.
 
-Alerts go by Telegram push (or email) only for milestone drafts, anything that costs money, stuck agents and the usage check-in. Nothing for routine progress. Contacts are kept with each product, never in the kit or memory.
+Alerts go by Telegram push (or email) only for milestone drafts, anything that costs money, stuck agents and the usage check-in. In a cloud session that can't reach Telegram, the alert goes in the thread instead. Nothing for routine progress. Contacts are kept with each product, never in the kit or memory.
 
 ## 6. Handoff template and rules
 - The PM writes one handoff per session, under 60 lines, in the product's vault. It auto-loads next session.
@@ -121,4 +121,6 @@ None. Settled on approval:
 - Agents work and send alerts any time.
 - After each product the PM proposes kit changes; A'marri approves before they're made.
 - Plant app data is private: only A'marri can sign in, nothing is shared, export or delete any time.
+- 2026-11-03: Kit updated from the PWS migration (approved by Liam): `/feature` for changes after a draft, live-change rule with a "What went live" list, project memory conventions, more setup traps, data-privacy, copy and accessibility rules in conventions, merge-then-clean-up and board rules in `/orchestrate`, go-live plan with owners, undo steps, backup-restore and security gates, role guides at the final draft, a designer polish pass.
+- Hosting: Cloudflare (free) or Vercel Pro. Never Vercel's free plan: it allows personal, non-commercial use only. (Supersedes the Vercel free-tier lines above.)
 - 2026-11-03: Kit updated from the RPC Property Dashboard build (approved by Liam): cloud-session rules, setup preflight and setup traps, go-live phase, current-process walkthrough and counterpoint research in kickoff, 2–3 design looks, owner name in one place. Earlier lines say A'marri: that was the same owner account, now Liam.

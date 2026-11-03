@@ -42,3 +42,4 @@ Rules:
 - Don't repeat what already lives in the master plan, tickets, decisions or commits. Point to it instead.
 - Never include API keys, passwords or personal data.
 - If the owner gave a focus, shape "Next steps" around it.
+- In a Claude project with shared memory, also update the memory summary as `vault/project-memory.md` describes, so threads that never read handoffs still see the current state.

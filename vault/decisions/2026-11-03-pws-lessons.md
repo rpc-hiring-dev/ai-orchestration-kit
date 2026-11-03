@@ -1,0 +1,1 @@
+- 2026-11-03: Kit updated with lessons from the PWS migration (Liam approved the list in the project thread, after merging the dashboard lessons in PR #4). Hosting rule: Cloudflare free or Vercel Pro, never Vercel's free plan.
