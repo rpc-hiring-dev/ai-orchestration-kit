@@ -37,7 +37,7 @@ LOCK = os.path.join(ROOT, "status", ".board.lock")
 MD = os.path.join(ROOT, "vault", "Dashboard.md")
 HTML = os.path.join(ROOT, "dashboard", "index.html")
 
-PHASES = ["Discovery", "Master plan", "Tickets", "Features draft", "Design draft", "Final draft", "Shipped"]
+PHASES = ["Discovery", "Master plan", "Tickets", "Features draft", "Design draft", "Final draft", "Go-live", "Shipped"]
 TASK_STATES = ["todo", "doing", "review", "done", "blocked"]
 AGENT_STATES = ["working", "idle", "blocked", "done"]
 

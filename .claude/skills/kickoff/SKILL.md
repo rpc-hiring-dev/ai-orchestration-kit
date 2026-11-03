@@ -21,17 +21,20 @@ Seed the design tree with these branches. Skip a branch only when the owner has 
 
 - **Outcome:** what problem this solves, for whom, and what "it worked" looks like in numbers or behaviour.
 - **Users:** who uses it, their skill level, devices, accessibility needs.
+- **Current process:** before features, walk through how the person who will use it most does the job today, step by step on a real recent example (ask the owner to record a short walkthrough or screen share if that person isn't the owner). List every sheet, inbox and tool they touch. Features that don't match this walk-through are the ones that get rebuilt later.
 - **Scope:** the must-haves for version 1, the nice-to-haves, and what is explicitly out.
 - **Features:** for each must-have, the main flow, the edge cases and the failure cases.
-- **Data:** what is stored, where, who owns it, privacy and retention.
+- **Data:** what is stored, where, who owns it, privacy and retention. For every existing source (sheet, export, report), look at a real sample and check its numbers against something the owner trusts: labels can be wrong. Note how existing data will be imported and how test data will be told apart from real data.
 - **Integrations:** outside services, accounts and API keys needed, and who provides them.
 - **Platform and stack:** default is a TypeScript and React installable web app on free hosting and database tiers. Ask only what this product needs beyond that, and any budget limits.
 - **Design direction:** mood, references the owner likes, brand colours, fonts, icon set (default: Tabler icons). Use `design-taste-frontend` to propose a direction for front-end work. Animation uses GSAP; React Bits components are copied in one at a time.
 - **Quality bar:** testing standard, performance targets, security needs, browsers and devices to support.
-- **Autonomy:** which decisions agents may make alone and which need the owner. Default to the system plan's guardrails and three milestone drafts. Set up alerts: the owner's Telegram bot token and chat id (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`; `python3 tools/notify.py --find-chat` finds the id) and, if they want email too, `ALERT_EMAIL_TO`. These go in `.env` or the cloud environment, never in the plan.
-- **Done:** what must be true to call version 1 finished, and how it gets deployed.
+- **Autonomy:** which decisions agents may make alone and which need the owner. Default to the system plan's guardrails and three milestone drafts. Set up alerts: the owner's Telegram bot token and chat id (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`; `python3 tools/notify.py --find-chat` finds the id) and, if they want email too, `ALERT_EMAIL_TO`. These go in `.env` or the cloud environment, never in the plan. Copy `vault/templates/env.manifest` to `env.manifest` at the repo root and list every key and setting the integrations need (names only), using `vault/setup-traps.md` to word each setup step.
+- **Done and go-live:** what must be true to call version 1 finished, how it gets deployed, how real data moves in, and how long it runs alongside the old way before that is retired.
 
-After each round, append the settled answers to the "Decision log" section of `vault/master-plan.md`, creating it from `vault/templates/master-plan.md` on the first round. If the session ends mid-interview, nothing is lost.
+After the owner answers every question in a round, call the Skill tool with `counterpoints` and follow it before the next round: the case for and against each answer, with sources, then the owner confirms or changes them. Skip it only if the owner says so for this project.
+
+After each confirmed round, append the settled answers to the "Decision log" section of `vault/master-plan.md`, creating it from `vault/templates/master-plan.md` on the first round. If the session ends mid-interview, nothing is lost.
 
 ## 3. Write the master plan
 

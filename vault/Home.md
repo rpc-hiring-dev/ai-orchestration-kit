@@ -9,6 +9,7 @@ Open this folder (`vault/`) in Obsidian as a vault.
 - `screenshots/`: the build timeline, also shown on the Dashboard.
 - `tickets/`: one note per task, written by `/to-tickets`.
 - `decisions/`: one line per decision the agents made.
+- [[setup-traps]]: setup mistakes earlier builds hit, read before asking the owner to set anything up.
 - `handoffs/`: end-of-session notes. The newest one starts the next session.
 - [[Parked tools]]: tools saved for later builds.
 

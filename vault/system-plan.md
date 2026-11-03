@@ -1,13 +1,14 @@
 # System plan: AI orchestration kit
 
 Status: approved on 2026-10-11
+Owner: Liam (the person who approves plans, drafts and anything on the guardrail list; change it here only, and every skill follows it)
 
 The master document for the orchestration system itself. Each product gets its own plan in `vault/master-plan.md` through `/kickoff`.
 
 ## 1. Vision and definition of done
 A personal agent team that turns one interview into a shipped product with little babysitting. Priorities in order: quality and consistency, token savings, autonomy, visibility.
 
-The system is done when the plant-care app ships through it: A'marri uses it privately on their Pixel 9 without regular debugging, all three milestone drafts were delivered, and the build never needed a check-in outside milestones, money or a stuck agent.
+The system is done when the plant-care app ships through it: the owner uses it privately on a Pixel 9 without regular debugging, all three milestone drafts were delivered, and the build never needed a check-in outside milestones, money or a stuck agent.
 
 It has failed if 15% or more of a master plan is dropped because it can't be built or maintained, if a product needs debugging every day or two, or if the output looks unprofessional or inconsistent.
 
@@ -15,7 +16,7 @@ It has failed if 15% or more of a master plan is dropped because it can't be bui
 See "Decision log" at the end of this file. Every answer and accepted default is there, one line each.
 
 ## 3. System architecture
-**Flow:** A'marri gives an idea, then `/kickoff` interviews them and writes the product's master plan. They approve it. `/to-tickets` splits it into tickets. `/orchestrate` turns the session into the PM, which runs the build until done.
+**Flow:** the owner gives an idea, then `/kickoff` interviews them and writes the product's master plan. They approve it. `/to-tickets` splits it into tickets. `/orchestrate` turns the session into the PM, which runs the build until done.
 
 **Roles**
 - **PM:** plans, hands out tickets, merges reviewed work, keeps the board current, writes the session handoff. Writes no product code.
@@ -23,13 +24,13 @@ See "Decision log" at the end of this file. Every answer and accepted default is
 - **Designer:** sets the product's design system at the design milestone using the design skills, GSAP and React Bits.
 - **Coders (up to 3 at once):** one ticket each, test-first, report to the PM in 10 lines or fewer.
 - **Reviewer, tester, security and performance checkers:** check every ticket before merge (security only when it touches login, input or personal data).
-- **Auditor:** a fresh-context Claude that sees only the plan and the finished work, at each milestone. A second model can join later at milestones only, after A'marri's OK.
+- **Auditor:** a fresh-context Claude that sees only the plan and the finished work, at each milestone. A second model can join later at milestones only, after the owner's OK.
 
 **Task done** = tests pass and the reviewer approves.
-**Stuck** = 3 attempts in total, then the PM, which alerts A'marri instead of retrying.
+**Stuck** = 3 attempts in total, then the PM, which alerts the owner instead of retrying.
 **Usage limit** = the PM writes a handoff, pauses and resumes in the next window on its own.
 
-**Milestones A'marri signs off:** features (a working plain app at a private link), design (fully styled, with screenshots), final (finished app plus a short how-to). They reply "approved" or list changes.
+**Milestones the owner signs off:** features (a working plain app at a private link), design (2–3 looks to pick from, then fully styled, with screenshots), final (finished app plus a short how-to). They reply "approved" or list changes. Then **go-live:** import rehearsal, test data removed with the owner's OK, live data sources checked with `preflight.py --live`, and a parallel run with the old way (default one week) before it is retired.
 
 ## 4. Tool stack
 | Tool | How it's connected | Token cost |
@@ -42,11 +43,11 @@ See "Decision log" at the end of this file. Every answer and accepted default is
 | GSAP | Installed from npm per product | None until used |
 | React Bits | Individual components copied in as needed | Low |
 | Alerts | A private Telegram bot (free), with Resend email as an option | None |
-| Obsidian | Opens the vault in A'marri's PC folder | None |
+| Obsidian | Opens the vault in the owner's PC folder | None |
 Per-project later: graphify, watermelon-platform, bklit-ui. Motion is dropped in favour of GSAP. Parked links stay in "Parked tools".
 
 ## 5. Dashboard spec
-Lives as a browser page and the Obsidian Dashboard note in A'marri's PC folder, plus the live thread status in the project. It shows:
+Lives as a browser page and the Obsidian Dashboard note in the owner's PC folder, plus the live thread status in the project. It shows:
 - each agent's task, status, last update and blocker;
 - the current milestone and overall percent complete;
 - token use, estimated and actual, per ticket and in total;
@@ -63,24 +64,24 @@ Alerts go by Telegram push (or email) only for milestone drafts, anything that c
 ## 7. Quality rules
 - Every agent follows the kit's code review and design skills and the product's design system.
 - Each product has a short conventions note (naming, structure, design tokens) that every agent reads first; the reviewer rejects work that breaks it.
-- One stack for every product: TypeScript and React. Changing it needs A'marri.
+- One stack for every product: TypeScript and React. Changing it needs the owner.
 - Before a ticket is done: automated tests for logic, a click-through test of each main flow, and a screenshot check at phone size.
 
 ## 8. Guardrails
-Need A'marri's approval: spending money, making anything public, deleting data, repos or accounts, adding an outside service or key, changing the stack, changing the kit itself, and continuing past half the week's Max usage (A'marri names the percent).
+Need the owner's approval: spending money, making anything public, deleting data, repos or accounts, adding an outside service or key, changing the stack, changing the kit itself, and continuing past half the week's Max usage (the owner names the percent).
 Agents may do alone: merge reviewed work, update private preview links, make choices the master plan's autonomy rules allow (logged in `vault/decisions/`).
 No deadlines. Agents work and send alerts any time.
 
 ## 9. Build order
 1. **Update the kit:** add researcher, designer and auditor agents; set the 3-attempt rule, milestone drafts, usage check-in and guardrails in `/orchestrate`; add the conventions note; add token use and screenshot timeline to the board and dashboard. Milestone: a dry run on a tiny sample app passes end to end.
-2. **Connect A'marri's side:** the PC folder for the vault and dashboard, and the free email service for alerts. Milestone: a test alert email arrives and the dashboard opens in Obsidian.
+2. **Connect the owner's side:** the PC folder for the vault and dashboard, and the free email service for alerts. Milestone: a test alert email arrives and the dashboard opens in Obsidian.
 3. **Plant app kickoff:** a new repo from the kit and its own `/kickoff` interview. Milestone: its master plan is approved.
 4. **Plant app build:** tickets and orchestration through the features, design and final drafts. Milestone: final draft approved and in daily use.
-5. **Retro:** the PM proposes kit changes from what went wrong. Milestone: A'marri approves or declines each.
+5. **Retro:** the PM proposes kit changes from what went wrong. Milestone: the owner approves or declines each.
 
 ## 10. Open questions
 None. Settled on approval:
-- Agents can't read the Max usage meter, so the PM estimates tokens against a weekly budget and asks A'marri to confirm the real figure at the check-in.
+- Agents can't read the Max usage meter, so the PM estimates tokens against a weekly budget and asks the owner to confirm the real figure at the check-in.
 - Alerts use a free Telegram bot (chosen 2026-10-11). Resend's free tier was tried first and only delivers to its own account address; ntfy's free quota is shared per cloud IP.
 - The kit becomes a GitHub template repo.
 
@@ -120,3 +121,4 @@ None. Settled on approval:
 - Agents work and send alerts any time.
 - After each product the PM proposes kit changes; A'marri approves before they're made.
 - Plant app data is private: only A'marri can sign in, nothing is shared, export or delete any time.
+- 2026-11-03: Kit updated from the RPC Property Dashboard build (approved by Liam): cloud-session rules, setup preflight and setup traps, go-live phase, current-process walkthrough and counterpoint research in kickoff, 2–3 design looks, owner name in one place. Earlier lines say A'marri: that was the same owner account, now Liam.
