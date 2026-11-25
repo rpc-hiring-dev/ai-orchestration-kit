@@ -75,7 +75,7 @@ At each one: run `code-reviewer`, `test-engineer`, `security-auditor` and `web-p
 
 ## Changes after a draft
 
-Owners keep asking for changes once they use a draft, and after launch that becomes most of the work. Run each request through the `feature` skill, ideally in its own thread: branch, review, before-and-after screenshots, a pull request, the owner's OK to merge, then each live step with its own OK. Keep building tickets that don't depend on it.
+Owners keep asking for changes once they use a draft, and after launch that becomes most of the work. Run each request through the `feature` skill, ideally in its own thread: branch, review, before-and-after screenshots, a pull request, the owner's OK to merge, then each live step with its own OK. Once two or more change threads run at once, follow the "One merge for parallel threads" section of `/feature`: one combiner thread folds the ready pull requests into a single pull request for the owner. Keep building tickets that don't depend on it.
 
 ## Decisions and blockers
 

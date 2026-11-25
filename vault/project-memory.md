@@ -6,6 +6,7 @@ In Claude projects every thread shares one project memory. Once a build moves to
 - **One summary file** (the memory index) that a new thread can read in a minute: setup and accounts, how the app works, open asks for the owner, and one line per feature.
 - **One file per subject** for anything longer (a feature with many moving parts, the build state, the owner's working preferences). Link it from its summary line.
 - Keep each file under about 4 KB. When one grows past that, summarise it; don't start a second file on the same subject.
+- Keep the summary file under about 60 lines. When one of its sections passes 10 lines, move it into its own file and leave one link line. Once a feature is LIVE and has gone a month without changes, shorten its line or move it to that feature area's file.
 
 ## A feature line
 `<Feature> (PR #<n>, <state> <date>, <who OK'd>): <one line on what it does>. <Migration name, function or schedule if any>.`
