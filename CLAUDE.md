@@ -17,6 +17,7 @@ This repo is an agent team. The owner describes a product once, and agents plan 
 - `tools/board.py` is the status board, including token use and the screenshot timeline. Every agent reports through it, and nobody edits `status/board.json` by hand.
 - `tools/notify.py` alerts the owner (Telegram push, email, or both), only for milestone drafts, money, stuck tickets and the usage check-in.
 - `vault/Dashboard.md` and `dashboard/index.html` are generated views of the board.
+- `tools/kit_sync.py` brings a product repo up to the latest kit (`--apply` to copy; product files in `vault/` are never touched).
 - `vault/project-memory.md` says how to keep the shared project memory (Claude projects) as the running state once threads stop writing handoffs.
 
 ## Tracker
@@ -30,5 +31,7 @@ The issue tracker is local files. Specs go in `vault/specs/<slug>.md`, tickets i
 - Keep reports short. Point to files instead of pasting them.
 - Never commit secrets or contact details. They go in `.env`, which is git-ignored.
 - Never without the owner's OK: spend money, make anything public, delete data, repos or accounts, add an outside service or key, change the stack, or change the kit.
-- **Live changes:** once real people use the product, nothing is merged to the branch that deploys it, no migration runs on its database, no function is deployed, no secret is set and no email, scheduled job or webhook is switched on without the owner's OK for that change. Test migrations on a local copy first. Afterwards, reply with a short "What went live" list.
+- **Live changes:** once real people use the product, nothing is merged to the branch that deploys it, no migration runs on its database, no function is deployed, no secret is set and no email, scheduled job or webhook is switched on without the owner's OK for that change. Test migrations on a local copy first. Afterwards, reply with a short "What went live" list. Under the system plan's owner settings, an OK to merge also covers that pull request's migration: apply it live first, confirm it, then merge.
+- **One merge:** when several change threads run at once, a thread never merges its own pull request. It hands it to the combiner thread (see `/feature`).
+- **Outside email:** never send email outside the project from a connected mailbox. Post a draft for the owner to send from the business address in the master plan.
 - Before stopping, or when context is getting long, run `/handoff`.

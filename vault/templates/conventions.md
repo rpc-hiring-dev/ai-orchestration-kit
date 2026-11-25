@@ -37,5 +37,12 @@ Never run `npm ci` in the main checkout while agents run: worktrees may share it
 ## Test data
 Every seed and test row is marked (for example `source = 'seed'` or an id prefix) so go-live removes them in one step. Settings that choose a data source default to the live source in production; fixtures are for tests only.
 
+## AI features
+Any feature that calls a model (ask a question, summarise, check a listing) starts with cost and scope limits:
+- It answers only from data the person can already see on screen or through their access rules, and refuses off-topic questions in one line.
+- Easy questions go to the cheapest model that handles them; only hard ones go to a larger model. Cache the fixed instructions.
+- A monthly spend cap, checked before each call, with an email to the owner when it is reached (the cap amount is the owner's call).
+- A question log (who, when, model, cost; never more personal data than needed), deleted after 90 days.
+
 ## Secrets
 Keys and contact details go in `.env`, never in the vault or code.

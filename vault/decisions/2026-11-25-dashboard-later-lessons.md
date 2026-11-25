@@ -1,0 +1,1 @@
+- 2026-11-25: Kit updated with the RPC Property Dashboard's later lessons (Liam picked items 1-7 of the ranked list): merge-covers-migration and one-merge owner settings, draft-only outside email, tools/kit_sync.py, eight setup traps, memory index size rule, AI feature cost rules.

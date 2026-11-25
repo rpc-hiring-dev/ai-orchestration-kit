@@ -34,11 +34,19 @@ Open one pull request per change. Its description says, in plain words:
 - the screenshots (or where they are);
 - **what going live needs**, as a list: each migration, function deploy, secret, setting, scheduled job or switch-on, and who does it.
 
-Nothing is merged without the owner's OK. When they say so, merge it.
+Nothing is merged without the owner's OK. When they say so, merge it, unless the "One merge" owner setting applies (below).
+
+### One merge for parallel threads
+
+When more than one change thread runs at a time, separate merges conflict and the live app can end up with half of a change. So, with the system plan's "One merge for parallel threads" setting on:
+
+- **Change threads** never merge their own pull request. When it is reviewed and ready, they send the combiner thread its number, branch, migrations and live steps, and say so in their own thread. Fixes keep landing on the same branch; tell the combiner each time.
+- **The combiner thread** (one per project, started by the main chat when the second change thread starts, or for each batch of tasks picked up together) merges every ready branch into one combined branch, fixes conflicts there, runs the full test suite once, and opens one pull request that lists each change thread, its pull request, migrations in the order they must run, and the merged "what going live needs" list. It pulls in later fixes as they arrive and closes the folded pull requests once the combined one merges.
+- **The owner** reviews and asks for changes in each change thread, and merges only the combined pull request. Questions about a change go to that change's thread, never to the combiner.
 
 ## 5. Go live, one step at a time
 
-Follow the "Live changes" rule in `CLAUDE.md`: each live step (migration on production, function deploy, secret, switching on emails, schedules or webhooks) happens only with the owner's OK for that change. The OK to merge covers the live steps only when the owner says so, or the pull request's "what going live needs" list was in front of them when they said it.
+Follow the "Live changes" rule in `CLAUDE.md`: each live step (migration on production, function deploy, secret, switching on emails, schedules or webhooks) happens only with the owner's OK for that change. The OK to merge covers the live steps only when the owner says so, or the pull request's "what going live needs" list was in front of them when they said it. With the system plan's "Merge OK covers its database change" setting on, the OK to merge always covers the pull request's migrations: run them on the live database first, check they worked, then merge.
 
 Then check it worked on the live app, and reply with a short **What went live** list: each step, done or waiting, and anything the owner has to do (with the exact setting name or link).
 

@@ -37,6 +37,9 @@ Testing standard, performance targets, security needs, and supported browsers an
 ## 11. Autonomy rules
 What agents decide alone, what needs the owner, and how progress is reported. Default: the guardrails in the system plan, email alerts only for milestone drafts, money, stuck tickets and the usage check-in.
 
+- **Outside email:** the business address the owner sends from (agents only draft): 
+- **Owner settings that differ from the system plan** (merge covers migration, one merge for parallel threads): 
+
 ## 12. Milestones
 The three drafts the owner signs off (features, design, final), and what each must show.
 

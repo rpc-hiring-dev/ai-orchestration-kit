@@ -8,6 +8,8 @@ Things that cost real time on earlier builds. The PM reads this before asking th
 - **A setting left on test data.** A data-source switch (e.g. `DATA_SOURCE=fixture`) set during the build stays that way in production, and the live app quietly shows sample rows. Mark such settings `live` in `env.manifest` and run `preflight.py --live` before go-live.
 - **A whole JSON key in one variable.** Service-account keys go in as the entire JSON file. Code should accept it pasted with or without line breaks and log the provider's refusal reason, not just "failed".
 - **Telegram bot typos.** A misspelled bot name is a different bot. Check the token with `getMe` and compare the @name.
+- **Hidden secrets can't be read back.** Hosting dashboards (e.g. Vercel "sensitive" variables) never show a saved value again. Before making a new key, ask the owner to check their password manager.
+- **Hosting env changes need a redeploy.** A changed Vercel variable only reaches the app after the next deploy; until then the old value keeps failing (e.g. webhook 401s).
 
 ## Accounts and providers
 - **Supabase sign-in email is capped** at about 2 emails an hour on the built-in sender. Set up custom SMTP (e.g. Resend with a verified domain) before inviting anyone.
@@ -19,6 +21,10 @@ Things that cost real time on earlier builds. The PM reads this before asking th
 - **Email quotas count incoming mail too.** On Resend's free plan (100 a day), inbound email shares the daily limit with outgoing. One flapping alarm sent about 350 alert emails and every app email failed for a day. When an email "didn't go out", check the app's email log for the provider's error first. Route bulk incoming mail elsewhere (e.g. Cloudflare Email Routing to a Worker).
 - **Cloudflare build settings only stick after pressing Save,** and only a push to the production branch builds. Turn preview-branch builds off unless they're wanted.
 - **Anthropic API keys must be workspace-scoped.** An organisation-level key gets a 400 asking for `anthropic-workspace-id`.
+- **Google OAuth apps in Testing mode** only let listed test users sign in. Write the exact Google Cloud project id in project memory: owners often have a second, unconfigured project with a similar name.
+- **One sending domain per product.** Products that share an email account share its limits, so one product's flood stops the other's mail. Give each product its own sending domain or account.
+- **Code the owner pastes into a website** (a WordPress snippet plugin, a tag manager) needs the exact snippet type named. A PHP snippet saved as HTML printed its secret on a live page. Never leave a placeholder value in it.
+- **Renamed owner accounts** keep the old name in history. Keep the owner's name in one place (the system plan) and say who the old name was.
 
 ## Cloud sessions (Claude projects)
 - No raw database connections (Postgres ports are blocked) and no Docker. Run migrations through the provider's HTTPS API (Supabase Management API) or CI; test against a local Postgres.
@@ -35,3 +41,5 @@ Things that cost real time on earlier builds. The PM reads this before asking th
 ## Data
 - **Source sheets can mislabel things** (a "profit" column that is really revenue). Check a source's numbers against something the owner trusts before building on it.
 - **Exports differ by screen.** Confirm the exact export path and download a real header row before writing an importer.
+- **Scraped pages change without warning.** A listing site's page change silently cut every photo but one. Each scraper gets a check that alerts when it starts returning less than usual, and tests built from a saved real page.
+- **Owners type over sheet headers.** Read a sheet by finding its header row, not by assuming row 1 is untouched.

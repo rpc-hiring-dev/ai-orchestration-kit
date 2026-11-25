@@ -72,6 +72,11 @@ Need the owner's approval: spending money, making anything public, deleting data
 Agents may do alone: merge reviewed work, update private preview links, make choices the master plan's autonomy rules allow (logged in `vault/decisions/`).
 No deadlines. Agents work and send alerts any time.
 
+**Owner settings** (change them here; `CLAUDE.md` and the skills follow them):
+- **Merge OK covers its database change:** yes. When the owner OKs merging a pull request, that also OKs its migration. Apply the migration to the live database first, confirm it worked, then merge, so the live app never runs code ahead of its database. Other live steps (secrets, switch-ons, deploys of separate functions) still need their own OK. Set to "no" to ask for each live step separately.
+- **One merge for parallel threads:** yes. Once more than one change thread runs at a time, threads don't merge their own pull requests. One combiner thread folds every ready pull request into a single conflict-free pull request for the owner to merge (see `/feature`).
+- **Outside email:** agents never send email to anyone outside the project from a connected mailbox. They post a draft, and the owner sends it from the product's business address (named in each master plan's autonomy rules).
+
 ## 9. Build order
 1. **Update the kit:** add researcher, designer and auditor agents; set the 3-attempt rule, milestone drafts, usage check-in and guardrails in `/orchestrate`; add the conventions note; add token use and screenshot timeline to the board and dashboard. Milestone: a dry run on a tiny sample app passes end to end.
 2. **Connect the owner's side:** the PC folder for the vault and dashboard, and the free email service for alerts. Milestone: a test alert email arrives and the dashboard opens in Obsidian.
@@ -124,3 +129,4 @@ None. Settled on approval:
 - 2026-11-03: Kit updated from the PWS migration (approved by Liam): `/feature` for changes after a draft, live-change rule with a "What went live" list, project memory conventions, more setup traps, data-privacy, copy and accessibility rules in conventions, merge-then-clean-up and board rules in `/orchestrate`, go-live plan with owners, undo steps, backup-restore and security gates, role guides at the final draft, a designer polish pass.
 - Hosting: Cloudflare (free) or Vercel Pro. Never Vercel's free plan: it allows personal, non-commercial use only. (Supersedes the Vercel free-tier lines above.)
 - 2026-11-03: Kit updated from the RPC Property Dashboard build (approved by Liam): cloud-session rules, setup preflight and setup traps, go-live phase, current-process walkthrough and counterpoint research in kickoff, 2–3 design looks, owner name in one place. Earlier lines say A'marri: that was the same owner account, now Liam.
+- 2026-11-25: Kit updated from the RPC Property Dashboard's later work (approved by Liam): owner settings for merge-covers-migration, one combined merge for parallel threads and draft-only outside email; `tools/kit_sync.py` so products pick up kit changes; eight setup traps; memory index size rule; AI feature cost rules in conventions.
